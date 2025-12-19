@@ -17,5 +17,4 @@ public class UserMapper {
         userDTO.setLastLogin(savedUser.getLastLogin());
         return userDTO;
     }
-
 }

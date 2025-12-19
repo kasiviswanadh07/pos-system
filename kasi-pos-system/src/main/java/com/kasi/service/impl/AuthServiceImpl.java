@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     private final CustomerUserImplementation customerUserImplementation;
     //    private User newUser;
 
-    private  AuthResponse authResponse;
+
 
 
     @Override
@@ -61,7 +61,7 @@ public class AuthServiceImpl implements AuthService {
 
         String jwt = jwtProvider.generateToken(authentication);
 
-        authResponse =new AuthResponse();
+        AuthResponse authResponse =new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("Registered Successfully");
         authResponse.setUser(UserMapper.toDTO(savedUser));
@@ -78,6 +78,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(userDTO.getEmail());
         user.setLastLogin(LocalDateTime.now());
         userRepository.save(user);
+        AuthResponse authResponse =new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("Login Successfully");
         authResponse.setUser(UserMapper.toDTO(user));
