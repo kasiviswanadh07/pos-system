@@ -2,6 +2,7 @@ package com.kasi.service.impl;
 
 import com.kasi.model.User;
 import com.kasi.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
