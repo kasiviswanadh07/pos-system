@@ -24,8 +24,11 @@ public class User {
     @Column(nullable = false, unique = true)
     @Email(message = "Email should be valid")
     private String email;
+    @ManyToOne
+    private Store store;
     private String phone;
 
+    @Column(nullable = false)
     private UserRole role;
     @Column(nullable = false)
     private String password;
