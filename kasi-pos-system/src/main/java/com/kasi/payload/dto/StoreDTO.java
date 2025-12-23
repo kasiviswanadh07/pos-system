@@ -2,7 +2,6 @@ package com.kasi.payload.dto;
 
 import com.kasi.domain.StoreStatus;
 import com.kasi.model.StoreContact;
-import com.kasi.model.User;
 import lombok.Data;
 
 import java.time.LocalDateTime;

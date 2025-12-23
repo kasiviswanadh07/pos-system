@@ -19,12 +19,12 @@ import java.util.List;
 @RequestMapping("/api/stores")
 public class StoreController {
     private final StoreService storeService;
-    private final UserService userSertvice;
+    private final UserService userService;
 
     @PostMapping("")
     public ResponseEntity<StoreDTO> createSore(@RequestBody StoreDTO storeDTO,
                                                @RequestHeader("Authorization") String jwt) throws UserException {
-        User user = userSertvice.getUserFromJwtToken(jwt);
+        User user = userService.getUserFromJwtToken(jwt);
         return ResponseEntity.ok(storeService.createStore(storeDTO, user));
 
     }
