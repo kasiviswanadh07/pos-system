@@ -1,10 +1,12 @@
 package com.kasi.service.impl;
 
 import com.kasi.mapper.ProductMapper;
+import com.kasi.model.Category;
 import com.kasi.model.Product;
 import com.kasi.model.Store;
 import com.kasi.model.User;
 import com.kasi.payload.dto.ProductDTO;
+import com.kasi.repository.CategoryRepository;
 import com.kasi.repository.ProductRepository;
 import com.kasi.repository.StoreRepository;
 import com.kasi.service.ProductService;
@@ -20,13 +22,17 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final StoreRepository storeRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO, User user) throws Exception {
         Store store = storeRepository.findById(productDTO.getStoreId()
         ).orElseThrow(
                 () -> new Exception("Store not found"));
-        Product product = ProductMapper.toEntity(productDTO, store);
+        Category category = categoryRepository.findById(productDTO.getCategoryId()).orElseThrow(
+                () -> new Exception("Category Not Found")
+        );
+        Product product = ProductMapper.toEntity(productDTO, store, category);
 
         return ProductMapper.toDTO(productRepository.save(product));
     }
@@ -40,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO updateProduct(Long id, ProductDTO productDTO, User user) throws Exception {
         Product product = productRepository.findById(id).
                 orElseThrow(() -> new Exception("Product not found"));
+
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setSku(productDTO.getSku());
@@ -48,8 +55,14 @@ public class ProductServiceImpl implements ProductService {
         product.setSellingPrice(productDTO.getSellingPrice());
         product.setBrand(productDTO.getBrand());
         product.setUpdateAt(LocalDateTime.now());
-        Product savedProdut = productRepository.save(product);
-        return ProductMapper.toDTO(savedProdut);
+        if (productDTO.getCategoryId() != null) {
+            Category category = categoryRepository.findById(productDTO.getCategoryId()).orElseThrow(
+                    () -> new Exception("Category Not Found")
+            );
+            product.setCategory(category);
+        }
+        Product savedProduct = productRepository.save(product);
+        return ProductMapper.toDTO(savedProduct);
     }
 
     @Override
@@ -62,8 +75,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getProductsByStoreId(Long storeId) {
+    public List<ProductDTO> getProductsByStoreId(Long storeId) throws Exception {
         List<Product> products = productRepository.findByStoreId(storeId);
+        if (products.isEmpty()) {
+            throw new Exception("Product not found with store id: " + storeId);
+        }
         return products.stream().map(ProductMapper::toDTO).collect(Collectors.toList());
     }
 

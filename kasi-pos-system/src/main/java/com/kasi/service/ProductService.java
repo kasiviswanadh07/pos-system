@@ -15,7 +15,7 @@ public interface ProductService {
 
     void deleteProduct(Long id, User user) throws Exception;
 
-    List<ProductDTO> getProductsByStoreId(Long storeId);
+    List<ProductDTO> getProductsByStoreId(Long storeId) throws Exception;
 
     List<ProductDTO> searchByKeyword(Long storeId, String keyword);
 }

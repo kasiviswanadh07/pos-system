@@ -1,5 +1,6 @@
 package com.kasi.mapper;
 
+import com.kasi.model.Category;
 import com.kasi.model.Product;
 import com.kasi.model.Store;
 import com.kasi.payload.dto.ProductDTO;
@@ -19,7 +20,9 @@ public class ProductMapper {
                 .mrp(product.getMrp())
                 .sellingPrice(product.getSellingPrice())
                 .brand(product.getBrand())
+                .category(CategoryMapper.toDto(product.getCategory()))
                 .storeId(product.getStore() != null ? product.getStore().getId() : null)
+                .categoryId(product.getCategory().getId())
                 .image(product.getImage())
                 .createAt(product.getCreateAt())
                 .updateAt(product.getUpdateAt())
@@ -28,9 +31,11 @@ public class ProductMapper {
 
     }
 
-    public static  Product toEntity(ProductDTO productDTO, Store store) {
+    public static  Product toEntity(ProductDTO productDTO, Store store, Category category) {
         return Product.builder().name(productDTO.getName())
                 .sku(productDTO.getSku())
+                .store(store)
+                .category(category)
                 .description(productDTO.getDescription())
                 .mrp(productDTO.getMrp())
                 .sellingPrice(productDTO.getSellingPrice())

@@ -27,8 +27,8 @@ public class Product {
     private Double sellingPrice;
     private String brand;
     private String image;
-    //    @ManyToOne
-//    private Category category;
+    @ManyToOne
+    private Category category;
     @ManyToOne
     private Store store;
     private LocalDateTime createAt;
