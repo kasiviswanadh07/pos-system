@@ -1,11 +1,8 @@
 package com.kasi.service;
 
-import com.kasi.exception.UserException;
 import com.kasi.payload.dto.CategoryDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
 public interface CategoryService {
     CategoryDTO createCategory(CategoryDTO categoryDTO) throws Exception;
 

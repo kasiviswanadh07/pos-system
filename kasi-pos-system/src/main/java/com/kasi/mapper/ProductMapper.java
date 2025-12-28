@@ -31,7 +31,7 @@ public class ProductMapper {
 
     }
 
-    public static  Product toEntity(ProductDTO productDTO, Store store, Category category) {
+    public static Product toEntity(ProductDTO productDTO, Store store, Category category) {
         return Product.builder().name(productDTO.getName())
                 .sku(productDTO.getSku())
                 .store(store)
