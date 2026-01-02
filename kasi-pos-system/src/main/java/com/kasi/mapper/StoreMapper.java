@@ -6,8 +6,8 @@ import com.kasi.payload.dto.StoreDTO;
 import com.kasi.service.StoreService;
 
 public class StoreMapper {
-    public static StoreDTO toDTO(Store store){
-        StoreDTO storeDTO=new StoreDTO();
+    public static StoreDTO toDTO(Store store) {
+        StoreDTO storeDTO = new StoreDTO();
         storeDTO.setId(store.getId());
         storeDTO.setBrand(store.getBrand());
         storeDTO.setStoreAdmin(UserMapper.toDTO(store.getStoreAdmin()));

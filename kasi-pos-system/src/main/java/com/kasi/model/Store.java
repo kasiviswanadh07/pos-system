@@ -20,6 +20,7 @@ public class Store {
     @Column(nullable = false)
     private String brand;
     @OneToOne
+    @JoinColumn(name = "store_admin_id")
     private User storeAdmin;
     private LocalDateTime createAt;
 

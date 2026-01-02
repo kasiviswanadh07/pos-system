@@ -13,6 +13,8 @@ public class UserDTO {
     private String phone;
     private UserRole role;
     private String password;
+    private Long branchId;
+    private Long storeId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime lastLogin;

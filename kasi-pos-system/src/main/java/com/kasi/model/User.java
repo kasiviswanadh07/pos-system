@@ -26,6 +26,8 @@ public class User {
     private String email;
     @ManyToOne
     private Store store;
+    @ManyToOne
+    private Branch branch;
     private String phone;
 
     @Column(nullable = false)
@@ -36,5 +38,12 @@ public class User {
     private LocalDateTime updatedAt;
     private LocalDateTime lastLogin;
 
-
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }
