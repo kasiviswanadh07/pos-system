@@ -3,7 +3,6 @@ package com.kasi.mapper;
 import com.kasi.model.Store;
 import com.kasi.model.User;
 import com.kasi.payload.dto.StoreDTO;
-import com.kasi.service.StoreService;
 
 public class StoreMapper {
     public static StoreDTO toDTO(Store store) {
