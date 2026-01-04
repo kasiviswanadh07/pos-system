@@ -15,6 +15,6 @@ public interface CustomerService {
 
     List<CustomerDTO> getAllCustomers();
 
-    List<CustomerDTO> searchCustomers(String keyword, String email);
+    List<CustomerDTO> searchCustomers(String keyword);
 
 }

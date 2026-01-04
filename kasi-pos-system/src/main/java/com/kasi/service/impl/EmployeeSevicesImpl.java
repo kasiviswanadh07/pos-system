@@ -88,7 +88,7 @@ public class EmployeeSevicesImpl implements EmployeeService {
 
     @Override
     public List<UserDTO> findStoreEmployees(Long storeId, UserRole role) throws Exception {
-            Store store = storeRepository.findById(storeId).orElseThrow(
+        Store store = storeRepository.findById(storeId).orElseThrow(
                 () -> new Exception("Store Not found"));
 
 
@@ -107,5 +107,16 @@ public class EmployeeSevicesImpl implements EmployeeService {
                 .map(UserMapper::toDTO)
                 .collect(Collectors.toList());
         return employee;
+    }
+
+    @Override
+    public void resetPassword(Long id, String password) throws Exception {
+        User existingEmployee = userRepository.findById(id).orElseThrow(
+                () -> new Exception("Employee not exist with given id"));
+        if (password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("Password can't be null or empty");
+        }
+        existingEmployee.setPassword(passwordEncoder.encode(password));
+        userRepository.save(existingEmployee);
     }
 }

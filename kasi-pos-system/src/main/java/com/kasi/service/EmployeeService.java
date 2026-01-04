@@ -17,4 +17,6 @@ public interface EmployeeService {
     List<UserDTO> findStoreEmployees(Long storeId, UserRole role) throws Exception;
 
     List<UserDTO> findBranchEmployees(Long branchId, UserRole role) throws Exception;
+
+    void resetPassword(Long Id, String password) throws Exception;
 }

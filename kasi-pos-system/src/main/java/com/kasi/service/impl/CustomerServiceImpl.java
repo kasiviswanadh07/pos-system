@@ -54,9 +54,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDTO> searchCustomers(String fullname, String email) {
+    public List<CustomerDTO> searchCustomers(String fullname) {
         List<Customer> allCustomers =
-                customerRepository.findByFullNameContainingIgnoreCaseOrEmailContainingIgnoreCase(fullname, email);
+                customerRepository.findByFullNameContainingIgnoreCaseOrEmailContainingIgnoreCase(fullname);
         return allCustomers.stream().map(
                 CustomerMapper::toDto).collect(Collectors.toList());
     }

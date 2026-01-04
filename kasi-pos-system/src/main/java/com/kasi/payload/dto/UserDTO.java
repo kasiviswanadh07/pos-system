@@ -1,6 +1,7 @@
 package com.kasi.payload.dto;
 
 import com.kasi.domain.UserRole;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class UserDTO {
     private String email;
     private String phone;
     private UserRole role;
+    @NotBlank(message = "Password can't be empty")
     private String password;
     private Long branchId;
     private Long storeId;
