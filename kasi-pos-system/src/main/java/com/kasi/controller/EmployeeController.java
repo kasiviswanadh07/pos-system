@@ -60,4 +60,13 @@ public class EmployeeController {
         List<UserDTO> employee = employeeService.findBranchEmployees(Id, userRole);
         return ResponseEntity.ok(employee);
     }
+
+    @PatchMapping("{employeeId}")
+    public ResponseEntity<ApiResponse> resetPassword(@PathVariable Long employeeId,
+                                                     @RequestParam(required = true) String password) throws Exception {
+        employeeService.resetPassword(employeeId, password);
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setMessage("Password rested Successfully");
+        return ResponseEntity.ok(apiResponse);
+    }
 }

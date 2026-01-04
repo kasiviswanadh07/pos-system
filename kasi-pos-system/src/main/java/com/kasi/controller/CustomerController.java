@@ -46,9 +46,8 @@ public class CustomerController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<CustomerDTO>> searchCustomer(@RequestParam (required = false)String keyword,
-                                                            @RequestParam (required = false)String email) throws Exception {
-        return ResponseEntity.ok(customerService.searchCustomers(keyword, email));
+    public ResponseEntity<List<CustomerDTO>> searchCustomer(@RequestParam(required = false) String keyword) throws Exception {
+        return ResponseEntity.ok(customerService.searchCustomers(keyword));
     }
 
 }
