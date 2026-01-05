@@ -1,7 +1,5 @@
 package com.kasi.repository;
 
-import com.kasi.domain.UserRole;
-import com.kasi.model.Inventory;
 import com.kasi.model.Store;
 import com.kasi.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

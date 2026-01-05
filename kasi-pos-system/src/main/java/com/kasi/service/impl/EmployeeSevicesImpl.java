@@ -110,11 +110,12 @@ public class EmployeeSevicesImpl implements EmployeeService {
     }
 
     @Override
-    public void resetPassword(Long id, String password) throws Exception {
-        User existingEmployee = userRepository.findById(id).orElseThrow(
-                () -> new Exception("Employee not exist with given id"));
+    public void resetPassword(String email, String password) throws Exception {
+        User existingEmployee = userRepository.findByEmail(email);
         if (password == null || password.isEmpty()) {
-            throw new IllegalArgumentException("Password can't be null or empty");
+            throw new Exception("Password can't be null or empty");
+        } else if (existingEmployee.equals("")) {
+            throw new Exception("Email Not Found");
         }
         existingEmployee.setPassword(passwordEncoder.encode(password));
         userRepository.save(existingEmployee);
