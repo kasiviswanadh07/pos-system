@@ -18,5 +18,5 @@ public interface EmployeeService {
 
     List<UserDTO> findBranchEmployees(Long branchId, UserRole role) throws Exception;
 
-    void resetPassword(Long Id, String password) throws Exception;
+    void resetPassword(String email, String password) throws Exception;
 }
