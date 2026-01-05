@@ -61,10 +61,10 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-    @PatchMapping("/resetPassword/{email}")
-    public ResponseEntity<ApiResponse> resetPassword(@PathVariable String email,
-                                                     @RequestBody String password) throws Exception {
-        employeeService.resetPassword(email, password);
+    @PatchMapping("{employeeId}")
+    public ResponseEntity<ApiResponse> resetPassword(@PathVariable Long employeeId,
+                                                     @RequestParam(required = true) String password) throws Exception {
+        employeeService.resetPassword(employeeId, password);
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setMessage("Password rested Successfully");
         return ResponseEntity.ok(apiResponse);

@@ -31,6 +31,9 @@ public class AuthServiceImpl implements AuthService {
     private final CustomerUserImplementation customerUserImplementation;
     //    private User newUser;
 
+
+
+
     @Override
     public AuthResponse singUp(UserDTO userDTO) throws UserException {
         User user = userRepository.findByEmail(userDTO.getEmail());
