@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -63,8 +64,9 @@ public class EmployeeController {
 
     @PatchMapping("/resetPassword/{email}")
     public ResponseEntity<ApiResponse> resetPassword(@PathVariable String email,
-                                                     @RequestBody String password) throws Exception {
-        employeeService.resetPassword(email, password);
+                                                     @RequestBody Map<String, String> password) throws Exception {
+        String  passwords = password.get("password");
+        employeeService.resetPassword(email, passwords);
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setMessage("Password rested Successfully");
         return ResponseEntity.ok(apiResponse);
