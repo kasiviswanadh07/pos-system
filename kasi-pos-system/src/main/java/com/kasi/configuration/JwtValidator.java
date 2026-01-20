@@ -25,34 +25,41 @@ import java.util.logging.LogRecord;
 public class JwtValidator extends OncePerRequestFilter {
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.startsWith("/swagger-ui")
+                || path.startsWith("/v3/api-docs");
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-    String jwt=request.getHeader(JwtConstant.JWT_HEADER);
+        String jwt = request.getHeader(JwtConstant.JWT_HEADER);
 
-    //Bearer jwt
-        if(jwt != null){
+        //Bearer jwt
+        if (jwt != null) {
             jwt = jwt.substring(7);
             try {
-                SecretKey key= Keys.hmacShaKeyFor(JwtConstant.JWT_SECRET.getBytes());
-                Claims claims= Jwts.parser()
+                SecretKey key = Keys.hmacShaKeyFor(JwtConstant.JWT_SECRET.getBytes());
+                Claims claims = Jwts.parser()
                         .verifyWith(key)
                         .build()
                         .parseSignedClaims(jwt)
                         .getPayload();
 
-                String email=String.valueOf(claims.get("email"));
-                String authorities=String.valueOf(claims.get("authorities"));
+                String email = String.valueOf(claims.get("email"));
+                String authorities = String.valueOf(claims.get("authorities"));
 
-                List <GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+                List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 
-                Authentication auth = new UsernamePasswordAuthenticationToken(email,null,auths);
+                Authentication auth = new UsernamePasswordAuthenticationToken(email, null, auths);
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 throw new BadCredentialsException("Invalid Jwt...");
             }
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
 }

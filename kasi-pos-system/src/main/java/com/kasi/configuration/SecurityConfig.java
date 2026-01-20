@@ -1,7 +1,11 @@
 package com.kasi.configuration;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,10 +19,23 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 @Configuration
+@OpenAPIDefinition(
+        info = @Info(
+                title = "POS System API",
+                version = "1.0",
+                description = "APIs for POS System"
+        ),
+        security = @SecurityRequirement(name = "bearerAuth")
+)
+@SecurityScheme(
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT"
+)
 public class SecurityConfig {
 
     @Bean
@@ -28,8 +45,13 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize.requestMatchers("/api/**")
                         .authenticated()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**"
+                        ).permitAll()
                         .requestMatchers("/api/super-admin/**")
-                        .hasRole("ADIMN").anyRequest().permitAll())
+                        .hasRole("ADMIN").anyRequest().permitAll())
                 .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class).csrf(AbstractHttpConfigurer::disable)
                 .cors(
                         cors -> cors.configurationSource(corsConfigurationSource())
@@ -37,7 +59,7 @@ public class SecurityConfig {
     }
 
     @Bean
-        public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -59,4 +81,5 @@ public class SecurityConfig {
             }
         };
     }
+
 }
